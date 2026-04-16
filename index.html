@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Climb — Привычка, которая не стоит на месте</title>
+<title>Climb — A habit tracker for comfortable growth</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -24,10 +24,6 @@
   .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 15, 20, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 0.5px solid var(--border); }
   .brand { font-family: var(--display); font-size: 20px; font-weight: 500; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
   .brand-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 14px; font-family: var(--body); }
-  .lang-switch { display: flex; gap: 2px; padding: 3px; background: var(--bg-elev); border-radius: 100px; border: 0.5px solid var(--border); }
-  .lang-btn { padding: 6px 14px; background: transparent; border: none; color: var(--text-muted); font-family: var(--body); font-size: 12px; font-weight: 500; border-radius: 100px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; }
-  .lang-btn.active { background: var(--accent); color: #fff; }
-  .lang-btn:hover:not(.active) { color: var(--text); }
   .hero { min-height: 100vh; padding: 180px 40px 120px; position: relative; display: flex; flex-direction: column; justify-content: center; max-width: 1600px; margin: 0 auto; }
   .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; }
   .hero-text { max-width: 560px; }
@@ -50,10 +46,8 @@
   .phone-mid { transform: translateY(-24px); }
   .phone-right { transform: translateY(12px); opacity: 0.85; }
   .phone-screen { width: 100%; height: 100%; background: #111; border-radius: 32px; padding: 14px 10px 10px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-  /* weekday bar — cells are 10px wide, gap 2px */
   .weekdays-bar { display: grid; grid-template-columns: repeat(7, 10px); gap: 2px; font-size: 6.5px; color: var(--text-dim); text-align: center; margin-top: 3px; }
   .weekdays-bar .today-lbl { color: var(--accent); font-weight: 700; }
-  /* calendar grid */
   .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; margin-bottom: 1px; }
   .cal-header { margin-bottom: 3px; }
   .cal-header span { font-size: 7px; color: var(--text-dim); text-align: center; }
@@ -65,14 +59,12 @@
   .cal-future { color: var(--text-muted); }
   .cal-future-dim { color: #2e2e38; }
   .cal-today-cal { background: var(--accent); color: #fff; font-weight: 700; box-shadow: 0 0 0 1.5px rgba(167,139,250,0.5); }
-  /* phone header */
   .phone-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
   .phone-date { font-size: 9px; color: var(--text-muted); margin-bottom: 1px; }
   .phone-title { font-size: 20px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
   .streak-badge { background: rgba(255,169,77,0.1); border-radius: 10px; padding: 3px 7px; display: flex; align-items: center; gap: 4px; }
   .streak-num { font-size: 14px; font-weight: 700; color: var(--fire); line-height: 1; }
   .streak-sub { font-size: 7px; color: var(--text-dim); line-height: 1.2; }
-  /* habit cards — compact like real app */
   .habit-card { background: #1c1c22; border-radius: 10px; padding: 6px 9px 6px; margin-bottom: 4px; }
   .habit-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
   .habit-name { font-size: 11px; font-weight: 700; margin-bottom: 1px; color: #fff; letter-spacing: -0.01em; }
@@ -83,7 +75,6 @@
   .check-done-y { background: var(--partial); color: #2a1200; }
   .check-partial { background: var(--partial); color: #2a1200; }
   .check-pending { background: transparent; border: 1.5px solid rgba(167,139,250,0.45); }
-  /* history cells — horizontal rectangles like real app */
   .history-row { display: grid; grid-template-columns: repeat(6, 14px); gap: 3px; }
   .cell { width: 14px; height: 8px; border-radius: 2px; }
   .cell-done { background: var(--success); }
@@ -91,7 +82,6 @@
   .cell-skip { background: #222228; }
   .cell-future { background: transparent; border: 1px solid rgba(167,139,250,0.3); border-radius: 2px; }
   .cell-today { box-shadow: 0 0 0 1.5px var(--accent); }
-  /* old weekdays compat */
   .weekdays { display: grid; grid-template-columns: repeat(6, 14px); gap: 3px; font-size: 6.5px; color: var(--text-dim); text-align: center; margin-top: 3px; }
   .weekdays .today { color: var(--accent); font-weight: 700; }
   .section { padding: 140px 40px; max-width: 1400px; margin: 0 auto; position: relative; }
@@ -170,9 +160,6 @@
     .result-bar-value { font-size: 28px; }
     footer { flex-direction: column; text-align: center; }
   }
-  [data-lang-ru] { display: none; }
-  body.lang-ru [data-lang-en] { display: none; }
-  body.lang-ru [data-lang-ru] { display: initial; }
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
@@ -186,10 +173,6 @@
     <div class="brand-mark">C</div>
     <span>Climb</span>
   </div>
-  <div class="lang-switch">
-    <button class="lang-btn active" data-lang="en">EN</button>
-    <button class="lang-btn" data-lang="ru">RU</button>
-  </div>
 </nav>
 
 <section class="hero">
@@ -197,36 +180,26 @@
     <div class="hero-text">
       <div class="eyebrow">
         <span class="eyebrow-dot"></span>
-        <span data-lang-en>TRACK &amp; GROW</span>
-        <span data-lang-ru>TRACK &amp; GROW</span>
+        TRACK &amp; GROW
       </div>
 
-      <h1>
-        <span data-lang-en>A habit tracker for <em>comfortable growth.</em></span>
-        <span data-lang-ru>Трекер для <em>комфортного развития</em> привычек.</span>
-      </h1>
+      <h1>A habit tracker for <em>comfortable growth.</em></h1>
 
-      <p class="lede">
-        <span data-lang-en>Set how you want to grow — Climb helps you keep the pace.</span>
-        <span data-lang-ru>Задай, как ты хочешь расти — Climb поможет держать твой темп.</span>
-      </p>
+      <p class="lede">Set how you want to grow — Climb helps you keep the pace.</p>
 
       <div class="cta-row">
         <a href="https://expo.dev/artifacts/eas/jDokFGBRCdLPKYTN8ujvpC.apk" class="cta cta-primary">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 17.59 15.59 7H9V5h10v10h-2V8.41L6.41 19 5 17.59z" fill="currentColor" stroke="none"/>
           </svg>
-          <span data-lang-en>Download for Android</span>
-          <span data-lang-ru>Скачать для Android</span>
+          Download for Android
         </a>
         <a class="cta cta-disabled">
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
           </svg>
-          <span data-lang-en>Download for iOS</span>
-          <span data-lang-ru>Скачать для iOS</span>
-          <span class="cta-badge" data-lang-en>SOON</span>
-          <span class="cta-badge" data-lang-ru>СКОРО</span>
+          Download for iOS
+          <span class="cta-badge">SOON</span>
         </a>
       </div>
     </div>
@@ -237,18 +210,18 @@
         <div class="phone-screen">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;">
             <div>
-              <div style="font-size:8.5px;color:var(--text-muted);margin-bottom:1px;"><span>Wednesday, April 15</span></div>
-              <div style="font-size:21px;font-weight:700;line-height:1;letter-spacing:-0.03em;"><span>3 / 5 done</span></div>
+              <div style="font-size:8.5px;color:var(--text-muted);margin-bottom:1px;">Wednesday, April 15</div>
+              <div style="font-size:21px;font-weight:700;line-height:1;letter-spacing:-0.03em;">3 / 5 done</div>
             </div>
             <div style="background:rgba(255,169,77,0.13);border-radius:9px;padding:3px 7px;display:flex;align-items:center;gap:3px;margin-top:1px;">
               <span style="font-size:13px;">&#x1F525;</span>
-              <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--fire);line-height:1;">12</div><div style="font-size:6.5px;color:var(--text-dim);line-height:1.3;"><span>in a row</span></div></div>
+              <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--fire);line-height:1;">12</div><div style="font-size:6.5px;color:var(--text-dim);line-height:1.3;">in a row</div></div>
             </div>
           </div>
 
           <div class="habit-card">
             <div class="habit-row">
-              <div><div class="habit-name"><span>Squats</span></div><div class="habit-meta"><span class="goal">33</span><span> reps &middot; +1 daily</span></div></div>
+              <div><div class="habit-name">Squats</div><div class="habit-meta"><span class="goal">33</span> reps &middot; +1 daily</div></div>
               <div class="check-btn check-done">&#x2713;</div>
             </div>
             <div class="history-row"><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-done cell-today"></div></div>
@@ -256,7 +229,7 @@
 
           <div class="habit-card">
             <div class="habit-row">
-              <div><div class="habit-name"><span>Reading</span></div><div class="habit-meta"><span class="goal">22</span><span> min &middot; +1 min daily</span></div></div>
+              <div><div class="habit-name">Reading</div><div class="habit-meta"><span class="goal">22</span> min &middot; +1 min daily</div></div>
               <div class="check-btn check-partial">&#x2713;</div>
             </div>
             <div class="history-row"><div class="cell cell-done"></div><div class="cell cell-partial"></div><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-partial"></div><div class="cell cell-partial cell-today"></div></div>
@@ -264,7 +237,7 @@
 
           <div class="habit-card">
             <div class="habit-row">
-              <div><div class="habit-name"><span>English words</span></div><div class="habit-meta"><span class="goal">15</span><span> words &middot; +1 weekly</span></div></div>
+              <div><div class="habit-name">English words</div><div class="habit-meta"><span class="goal">15</span> words &middot; +1 weekly</div></div>
               <div class="check-btn check-done">&#x2713;</div>
             </div>
             <div class="history-row"><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-done cell-today"></div></div>
@@ -272,7 +245,7 @@
 
           <div class="habit-card">
             <div class="habit-row">
-              <div><div class="habit-name"><span>Meditation</span></div><div class="habit-meta"><span class="goal">8</span><span> min &middot; +30 sec daily</span></div></div>
+              <div><div class="habit-name">Meditation</div><div class="habit-meta"><span class="goal">8</span> min &middot; +30 sec daily</div></div>
               <div class="check-btn check-pending"></div>
             </div>
             <div class="history-row"><div class="cell cell-partial"></div><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-partial"></div><div class="cell cell-skip cell-today"></div></div>
@@ -280,13 +253,12 @@
 
           <div class="habit-card" style="margin-bottom:3px;">
             <div class="habit-row">
-              <div><div class="habit-name"><span>Cold shower</span></div><div class="habit-meta"><span class="goal">90</span><span> sec &middot; fixed</span></div></div>
+              <div><div class="habit-name">Cold shower</div><div class="habit-meta"><span class="goal">90</span> sec &middot; fixed</div></div>
               <div class="check-btn check-pending"></div>
             </div>
             <div class="history-row"><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-skip cell-today"></div></div>
           </div>
 
-          <!-- weekday labels: must use same grid-template-columns as .history-row (6x14px gap 3px) -->
           <div style="display:grid;grid-template-columns:repeat(6,14px);gap:3px;font-size:6.5px;color:var(--text-dim);text-align:center;margin-top:3px;">
             <span>F</span><span>S</span><span>S</span><span>M</span><span>T</span><span style="color:var(--accent);font-weight:700;">W</span>
           </div>
@@ -298,19 +270,17 @@
         <div class="phone-screen">
           <div style="display:flex;align-items:center;margin-bottom:7px;">
             <span style="color:var(--accent);font-size:10px;margin-right:3px;">&#8592;</span>
-            <span style="font-size:8.5px;color:var(--text-muted);"><span>Back</span></span>
-            <span style="flex:1;text-align:center;font-size:10px;font-weight:700;padding-right:14px;"><span>Squats</span></span>
+            <span style="font-size:8.5px;color:var(--text-muted);">Back</span>
+            <span style="flex:1;text-align:center;font-size:10px;font-weight:700;padding-right:14px;">Squats</span>
           </div>
           <div style="background:#1c1c22;border-radius:10px;padding:9px;text-align:center;margin-bottom:6px;">
-            <div style="font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2px;"><span>TODAY</span></div>
+            <div style="font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2px;">TODAY</div>
             <div style="font-size:30px;font-weight:700;color:var(--accent);letter-spacing:-0.02em;line-height:1;">33 <span style="font-size:14px;font-weight:500;">reps</span></div>
           </div>
-          <!-- April 2026 calendar: starts Wed -->
           <div style="background:#1c1c22;border-radius:10px;padding:6px 7px 5px;">
-            <div style="font-size:9.5px;font-weight:700;text-align:center;margin-bottom:4px;"><span>April 2026</span></div>
+            <div style="font-size:9.5px;font-weight:700;text-align:center;margin-bottom:4px;">April 2026</div>
             <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:2px;">
               <span style="font-size:6.5px;color:var(--text-dim);">Mo</span><span style="font-size:6.5px;color:var(--text-dim);">Tu</span><span style="font-size:6.5px;color:var(--text-dim);">We</span><span style="font-size:6.5px;color:var(--text-dim);">Th</span><span style="font-size:6.5px;color:var(--text-dim);">Fr</span><span style="font-size:6.5px;color:var(--text-dim);">Sa</span><span style="font-size:6.5px;color:var(--text-dim);">Su</span>
-              
             </div>
             <style>.cd{font-size:7.5px;text-align:center;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:4px;} .cd-g{background:#4ade80;color:#000;font-weight:600;} .cd-s{background:#222228;color:#555;} .cd-t{background:#a78bfa;color:#fff;font-weight:700;box-shadow:0 0 0 1.5px rgba(167,139,250,0.5);} .cd-f{color:#2a2a36;}</style>
             <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:1px;"><div class="cd"></div><div class="cd"></div><div class="cd cd-f">1</div><div class="cd cd-f">2</div><div class="cd cd-f">3</div><div class="cd cd-f">4</div><div class="cd cd-f">5</div></div>
@@ -322,11 +292,11 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px;">
             <div style="background:#1c1c22;border-radius:8px;padding:6px;text-align:center;">
               <div style="font-size:19px;font-weight:700;line-height:1;letter-spacing:-0.02em;">6/15</div>
-              <div style="font-size:7px;color:var(--text-dim);margin-top:2px;"><span>Days done</span></div>
+              <div style="font-size:7px;color:var(--text-dim);margin-top:2px;">Days done</div>
             </div>
             <div style="background:#1c1c22;border-radius:8px;padding:6px;text-align:center;">
               <div style="font-size:19px;font-weight:700;color:#4ade80;line-height:1;letter-spacing:-0.02em;">195</div>
-              <div style="font-size:7px;color:var(--text-dim);margin-top:2px;"><span>Total reps</span></div>
+              <div style="font-size:7px;color:var(--text-dim);margin-top:2px;">Total reps</div>
             </div>
           </div>
         </div>
@@ -336,30 +306,29 @@
       <div class="phone-frame phone-right">
         <div class="phone-screen">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <span style="font-size:8.5px;color:var(--text-muted);"><span>Cancel</span></span>
-            <span style="font-size:10.5px;font-weight:700;"><span>New Habit</span></span>
-            <span style="font-size:8.5px;font-weight:700;color:#a78bfa;"><span>Save</span></span>
+            <span style="font-size:8.5px;color:var(--text-muted);">Cancel</span>
+            <span style="font-size:10.5px;font-weight:700;">New Habit</span>
+            <span style="font-size:8.5px;font-weight:700;color:#a78bfa;">Save</span>
           </div>
-          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px;"><span>NAME</span></div>
-          <div style="background:#1c1c22;border-radius:7px;padding:6px 8px;margin-bottom:8px;font-size:8.5px;color:var(--text-dim);"><span>e.g. Morning run</span></div>
-          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px;"><span>STARTING GOAL</span></div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px;">NAME</div>
+          <div style="background:#1c1c22;border-radius:7px;padding:6px 8px;margin-bottom:8px;font-size:8.5px;color:var(--text-dim);">e.g. Morning run</div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px;">STARTING GOAL</div>
           <div style="background:#1c1c22;border-radius:7px;padding:6px 8px;margin-bottom:8px;font-size:8.5px;color:var(--text-dim);">e.g. 10</div>
-          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;"><span>UNIT</span></div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">UNIT</div>
           <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px;">
             <span style="padding:3px 7px;border-radius:20px;border:1.5px solid #a78bfa;color:#a78bfa;font-size:8.5px;">times</span><span style="padding:3px 7px;border-radius:20px;background:#1c1c22;font-size:8.5px;">min</span><span style="padding:3px 7px;border-radius:20px;background:#1c1c22;font-size:8.5px;">units</span><span style="padding:3px 7px;border-radius:20px;background:#1c1c22;font-size:8.5px;">custom</span>
-            
           </div>
-          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;"><span>PROGRESSION</span></div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">PROGRESSION</div>
           <div style="display:flex;flex-direction:column;gap:2.5px;">
-            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;border:1.5px solid #a78bfa;font-size:8.5px;"><span>&#x1F512; Fixed</span></div>
-            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);"><span>&#xFF0B; +N per day</span></div>
-            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);"><span>&#x1F4C5; +N per week</span></div>
-            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);"><span>&#x1F4C8; +N% per day</span></div>
-            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);"><span>&#x1F4C8; +N% per week</span></div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;border:1.5px solid #a78bfa;font-size:8.5px;">&#x1F512; Fixed</div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);">&#xFF0B; +N per day</div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);">&#x1F4C5; +N per week</div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);">&#x1F4C8; +N% per day</div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);">&#x1F4C8; +N% per week</div>
           </div>
-          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin:7px 0 4px;"><span>REMINDER</span></div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin:7px 0 4px;">REMINDER</div>
           <div style="display:flex;gap:5px;align-items:center;">
-            <div style="border-radius:7px;padding:5px 11px;border:1.5px solid #a78bfa;font-size:8.5px;font-weight:700;color:#a78bfa;"><span>On</span></div>
+            <div style="border-radius:7px;padding:5px 11px;border:1.5px solid #a78bfa;font-size:8.5px;font-weight:700;color:#a78bfa;">On</div>
             <div style="background:#1c1c22;border-radius:7px;padding:5px 8px;font-size:8.5px;color:var(--text-muted);flex:1;">08:00</div>
           </div>
         </div>
@@ -369,96 +338,56 @@
 </section>
 
 <section class="section fade-in">
-  <div class="section-label">
-    <span data-lang-en>PRINCIPLES</span>
-    <span data-lang-ru>ПРИНЦИПЫ</span>
-  </div>
-  <h2 class="section-title">
-    <span data-lang-en>Three principles <em>of Climb.</em></span>
-    <span data-lang-ru>Три принципа <em>Climb.</em></span>
-  </h2>
+  <div class="section-label">PRINCIPLES</div>
+  <h2 class="section-title">Three principles <em>of Climb.</em></h2>
 
   <div class="features">
     <div class="feature">
       <div class="feature-num">01</div>
-      <h4>
-        <span data-lang-en>Today's target, calculated for you</span>
-        <span data-lang-ru>Цель на сегодня посчитана за тебя</span>
-      </h4>
-      <p>
-        <span data-lang-en>You do the work — Climb does the math. Set your rule — +1 a day, +10% a week, or anything else — and Climb tells you how much to do today for your goal.</span>
-        <span data-lang-ru>Ты делаешь — Climb считает. Задай своё правило — +1 в день, +10% в неделю или любое другое — и Climb подскажет, сколько сделать сегодня для твоей цели.</span>
-      </p>
+      <h4>Today's target, calculated for you</h4>
+      <p>You do the work — Climb does the math. Set your rule — +1 a day, +10% a week, or anything else — and Climb tells you how much to do today for your goal.</p>
     </div>
 
     <div class="feature">
       <div class="feature-num">02</div>
-      <h4>
-        <span data-lang-en>Smart adjustment</span>
-        <span data-lang-ru>Умная подстройка</span>
-      </h4>
-      <p>
-        <span data-lang-en>Climb looks at what you actually did. Hit the target — the bar rises by your rule. Did less — the bar holds at its current level so the habit settles in.</span>
-        <span data-lang-ru>Climb смотрит на твои реальные результаты. Выполнил план — планка подрастёт по твоему правилу. Сделал частично — планка сохранится на текущем уровне, чтобы привычка закрепилась.</span>
-      </p>
+      <h4>Smart adjustment</h4>
+      <p>Climb looks at what you actually did. Hit the target — the bar rises by your rule. Did less — the bar holds at its current level so the habit settles in.</p>
     </div>
 
     <div class="feature">
       <div class="feature-num">03</div>
-      <h4>
-        <span data-lang-en>Visible progress</span>
-        <span data-lang-ru>Видимый прогресс</span>
-      </h4>
-      <p>
-        <span data-lang-en>You see your results, your streaks, your dynamics — how far you've come.</span>
-        <span data-lang-ru>Ты видишь свои результаты, динамику и прогресс — как далеко ты ушёл.</span>
-      </p>
+      <h4>Visible progress</h4>
+      <p>You see your results, your streaks, your dynamics — how far you've come.</p>
     </div>
   </div>
 </section>
 
 <section class="philosophy fade-in">
   <div class="philosophy-inner">
-    <div class="section-label">
-      <span data-lang-en>THE IDEA</span>
-      <span data-lang-ru>ИДЕЯ</span>
-    </div>
-
+    <div class="section-label">THE IDEA</div>
     <blockquote class="quote">
-      <span data-lang-en>1% better every day. After a year, you're 37 times stronger than when you started.</span>
-      <span data-lang-ru>Если каждый день делать на 1% больше, чем вчера — за год станешь в 37 раз лучше, чем в начале.</span>
+      1% better every day. After a year, you're 37 times stronger than when you started.
     </blockquote>
   </div>
 </section>
 
 <section class="download-section fade-in">
-  <div class="section-label">
-    <span data-lang-en>READY?</span>
-    <span data-lang-ru>ГОТОВ?</span>
-  </div>
-  <h2 class="section-title">
-    <span data-lang-en>Easy to start. <em>Easy to keep going.</em></span>
-    <span data-lang-ru>Легко начать. <em>Легко продолжать.</em></span>
-  </h2>
-  <p class="section-lede">
-    <span data-lang-en>Free. No sign-up, no paywall.</span>
-    <span data-lang-ru>Бесплатно. Без регистрации и подписок.</span>
-  </p>
+  <div class="section-label">READY?</div>
+  <h2 class="section-title">Easy to start. <em>Easy to keep going.</em></h2>
+  <p class="section-lede">Free. No sign-up, no paywall.</p>
 
   <div class="cta-row">
     <a href="https://expo.dev/artifacts/eas/jDokFGBRCdLPKYTN8ujvpC.apk" class="cta cta-primary">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M5 17.59 15.59 7H9V5h10v10h-2V8.41L6.41 19 5 17.59z" fill="currentColor" stroke="none"/>
       </svg>
-      <span data-lang-en>Download for Android</span>
-      <span data-lang-ru>Скачать для Android</span>
+      Download for Android
     </a>
     <a class="cta cta-disabled">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
       </svg>
-      <span data-lang-en>iOS — coming soon</span>
-      <span data-lang-ru>iOS — скоро</span>
+      iOS — coming soon
     </a>
   </div>
 </section>
@@ -472,16 +401,6 @@
 </footer>
 
 <script>
-  const body = document.body;
-  const langBtns = document.querySelectorAll('.lang-btn');
-  langBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.dataset.lang;
-      langBtns.forEach(b => b.classList.toggle('active', b === btn));
-      body.classList.toggle('lang-ru', lang === 'ru');
-    });
-  });
-
   const fadeObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
