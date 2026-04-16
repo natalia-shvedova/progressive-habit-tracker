@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Climb — Привычка, которая не стоит на месте</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f14; --bg-card: #1a1a1f; --bg-elev: #26262e;
+    --text: #ffffff; --text-muted: #8a8a94; --text-dim: #6a6a74;
+    --accent: #a78bfa; --success: #4ade80; --partial: #facc15;
+    --skipped: #3a3a42; --future: #2a2a32; --fire: #ffa94d;
+    --border: rgba(255,255,255,0.08);
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'Inter', -apple-system, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--body); font-weight: 400; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .noise { position: fixed; inset: 0; pointer-events: none; opacity: 0.025; z-index: 1; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 15, 20, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 0.5px solid var(--border); }
+  .brand { font-family: var(--display); font-size: 20px; font-weight: 500; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+  .brand-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 14px; font-family: var(--body); }
+  .lang-switch { display: flex; gap: 2px; padding: 3px; background: var(--bg-elev); border-radius: 100px; border: 0.5px solid var(--border); }
+  .lang-btn { padding: 6px 14px; background: transparent; border: none; color: var(--text-muted); font-family: var(--body); font-size: 12px; font-weight: 500; border-radius: 100px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; }
+  .lang-btn.active { background: var(--accent); color: #fff; }
+  .lang-btn:hover:not(.active) { color: var(--text); }
+  .hero { min-height: 100vh; padding: 180px 40px 120px; position: relative; display: flex; flex-direction: column; justify-content: center; max-width: 1600px; margin: 0 auto; }
+  .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; }
+  .hero-text { max-width: 560px; }
+  .hero-visual { display: flex; gap: 16px; align-items: flex-start; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(167, 139, 250, 0.1); border: 0.5px solid rgba(167, 139, 250, 0.3); border-radius: 100px; color: var(--accent); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+  .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+  h1 { font-family: var(--display); font-weight: 400; font-size: clamp(44px, 7vw, 88px); line-height: 0.98; letter-spacing: -0.035em; margin-bottom: 28px; }
+  h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+  .lede { font-family: var(--display); font-weight: 300; font-size: clamp(18px, 2vw, 22px); line-height: 1.5; color: var(--text-muted); margin-bottom: 44px; max-width: 540px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .cta { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 14px; font-weight: 500; font-size: 14px; text-decoration: none; transition: all 0.2s; border: 0.5px solid transparent; cursor: pointer; font-family: var(--body); }
+  .cta-primary { background: var(--text); color: var(--bg); }
+  .cta-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,255,255,0.15); }
+  .cta-disabled { background: transparent; color: var(--text-dim); border-color: var(--border); cursor: not-allowed; pointer-events: none; }
+  .cta svg { width: 18px; height: 18px; }
+  .cta-badge { font-size: 10px; padding: 2px 6px; background: var(--bg-elev); border-radius: 4px; margin-left: 4px; color: var(--text-muted); font-weight: 500; }
+  .phone-frame { width: 230px; height: 560px; background: #0a0a0a; border-radius: 38px; padding: 6px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 60px 100px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(167,139,250,0.12), inset 0 0 0 1px rgba(255,255,255,0.04); position: relative; overflow: hidden; }
+  .phone-hero { width: 280px; height: 580px; }
+  .phone-mid { transform: translateY(-24px); }
+  .phone-right { transform: translateY(12px); opacity: 0.85; }
+  .phone-screen { width: 100%; height: 100%; background: #111; border-radius: 32px; padding: 14px 10px 10px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  /* weekday bar — cells are 10px wide, gap 2px */
+  .weekdays-bar { display: grid; grid-template-columns: repeat(7, 10px); gap: 2px; font-size: 6.5px; color: var(--text-dim); text-align: center; margin-top: 3px; }
+  .weekdays-bar .today-lbl { color: var(--accent); font-weight: 700; }
+  /* calendar grid */
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; margin-bottom: 1px; }
+  .cal-header { margin-bottom: 3px; }
+  .cal-header span { font-size: 7px; color: var(--text-dim); text-align: center; }
+  .cal-day { font-size: 8px; text-align: center; padding: 2px 0; border-radius: 4px; }
+  .cal-empty { font-size: 8px; }
+  .cal-done { background: var(--success); color: #000; font-weight: 600; }
+  .cal-partial-day { background: var(--partial); color: #2a1200; font-weight: 600; }
+  .cal-skip { background: #222228; color: var(--text-dim); }
+  .cal-future { color: var(--text-muted); }
+  .cal-future-dim { color: #2e2e38; }
+  .cal-today-cal { background: var(--accent); color: #fff; font-weight: 700; box-shadow: 0 0 0 1.5px rgba(167,139,250,0.5); }
+  /* phone header */
+  .phone-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .phone-date { font-size: 9px; color: var(--text-muted); margin-bottom: 1px; }
+  .phone-title { font-size: 20px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .streak-badge { background: rgba(255,169,77,0.1); border-radius: 10px; padding: 3px 7px; display: flex; align-items: center; gap: 4px; }
+  .streak-num { font-size: 14px; font-weight: 700; color: var(--fire); line-height: 1; }
+  .streak-sub { font-size: 7px; color: var(--text-dim); line-height: 1.2; }
+  /* habit cards — compact like real app */
+  .habit-card { background: #1c1c22; border-radius: 10px; padding: 6px 9px 6px; margin-bottom: 4px; }
+  .habit-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .habit-name { font-size: 11px; font-weight: 700; margin-bottom: 1px; color: #fff; letter-spacing: -0.01em; }
+  .habit-meta { font-size: 9px; color: var(--text-muted); }
+  .habit-meta .goal { color: var(--accent); font-weight: 700; }
+  .check-btn { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+  .check-done { background: var(--success); color: #003311; }
+  .check-done-y { background: var(--partial); color: #2a1200; }
+  .check-partial { background: var(--partial); color: #2a1200; }
+  .check-pending { background: transparent; border: 1.5px solid rgba(167,139,250,0.45); }
+  /* history cells — horizontal rectangles like real app */
+  .history-row { display: grid; grid-template-columns: repeat(6, 14px); gap: 3px; }
+  .cell { width: 14px; height: 8px; border-radius: 2px; }
+  .cell-done { background: var(--success); }
+  .cell-partial { background: var(--partial); }
+  .cell-skip { background: #222228; }
+  .cell-future { background: transparent; border: 1px solid rgba(167,139,250,0.3); border-radius: 2px; }
+  .cell-today { box-shadow: 0 0 0 1.5px var(--accent); }
+  /* old weekdays compat */
+  .weekdays { display: grid; grid-template-columns: repeat(6, 14px); gap: 3px; font-size: 6.5px; color: var(--text-dim); text-align: center; margin-top: 3px; }
+  .weekdays .today { color: var(--accent); font-weight: 700; }
+  .section { padding: 140px 40px; max-width: 1400px; margin: 0 auto; position: relative; }
+  .section-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; font-weight: 500; }
+  .section-title { font-family: var(--display); font-weight: 400; font-size: clamp(36px, 5vw, 60px); line-height: 1.05; letter-spacing: -0.03em; max-width: 900px; margin-bottom: 24px; }
+  .section-title em { font-style: italic; color: var(--accent); font-weight: 300; }
+  .section-lede { font-family: var(--display); font-weight: 300; font-size: 20px; color: var(--text-muted); max-width: 640px; line-height: 1.5; }
+  .demo-wrap { margin-top: 80px; background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 24px; padding: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .demo-controls h3 { font-family: var(--display); font-weight: 400; font-size: 32px; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .demo-controls p { color: var(--text-muted); margin-bottom: 40px; font-size: 15px; line-height: 1.6; }
+  .demo-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .demo-value { font-family: var(--display); font-size: 22px; font-weight: 400; letter-spacing: -0.02em; }
+  input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: var(--bg-elev); border-radius: 2px; outline: none; cursor: pointer; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: var(--accent); border-radius: 50%; cursor: pointer; border: 2px solid var(--bg); }
+  input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; background: var(--accent); border-radius: 50%; cursor: pointer; border: 2px solid var(--bg); }
+  .slider-row { display: flex; flex-direction: column; gap: 12px; padding: 18px 0; border-bottom: 0.5px solid var(--border); }
+  .slider-header { display: flex; justify-content: space-between; align-items: baseline; }
+  .seg-control { display: inline-flex; padding: 3px; background: var(--bg); border-radius: 10px; border: 0.5px solid var(--border); gap: 2px; }
+  .seg-btn { padding: 8px 14px; background: transparent; border: none; color: var(--text-muted); font-family: var(--body); font-size: 12px; font-weight: 500; border-radius: 7px; cursor: pointer; transition: all 0.15s; }
+  .seg-btn.active { background: var(--accent); color: #fff; }
+  .seg-btn:hover:not(.active) { color: var(--text); }
+  .demo-result { background: var(--bg); border-radius: 18px; padding: 40px 32px; text-align: center; position: relative; overflow: hidden; }
+  .result-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px; }
+  .result-timeline { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 32px; }
+  .result-cell { padding: 20px 12px; }
+  .result-cell-value { font-family: var(--display); font-size: 42px; font-weight: 400; letter-spacing: -0.02em; line-height: 1; margin-bottom: 8px; }
+  .result-cell.now .result-cell-value { color: var(--text); }
+  .result-cell.week .result-cell-value { color: var(--accent); }
+  .result-cell.month .result-cell-value { color: var(--success); font-style: italic; }
+  .result-cell-unit { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .result-cell-when { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
+  .result-bars { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 32px; height: 280px; align-items: end; }
+  .result-bar-col { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 12px; }
+  .result-bar-value { font-family: var(--display); font-size: 36px; font-weight: 400; letter-spacing: -0.02em; line-height: 1; transition: color 0.3s; }
+  .result-bar { width: 100%; max-width: 80px; border-radius: 8px 8px 0 0; transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1); min-height: 8px; }
+  .result-bar.now { background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)); border: 0.5px solid rgba(255,255,255,0.15); }
+  .result-bar.week { background: linear-gradient(180deg, var(--accent), rgba(167,139,250,0.4)); }
+  .result-bar.month { background: linear-gradient(180deg, var(--success), rgba(74,222,128,0.4)); }
+  .result-bar-col.now .result-bar-value { color: var(--text); }
+  .result-bar-col.week .result-bar-value { color: var(--accent); }
+  .result-bar-col.month .result-bar-value { color: var(--success); font-style: italic; }
+  .result-bar-when { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 80px; }
+  .feature { padding: 40px 32px; background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 20px; position: relative; transition: all 0.3s; }
+  .feature:hover { border-color: rgba(167,139,250,0.3); transform: translateY(-4px); }
+  .feature-num { font-family: var(--display); font-size: 48px; font-style: italic; font-weight: 300; color: var(--accent); margin-bottom: 24px; line-height: 1; }
+  .feature h4 { font-family: var(--display); font-weight: 500; font-size: 22px; margin-bottom: 12px; letter-spacing: -0.01em; }
+  .feature p { color: var(--text-muted); font-size: 14px; line-height: 1.65; }
+  .philosophy { padding: 140px 40px; background: var(--bg-card); border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+  .philosophy-inner { max-width: 1000px; margin: 0 auto; }
+  .quote { font-family: var(--display); font-weight: 300; font-style: italic; font-size: clamp(28px, 4vw, 44px); line-height: 1.3; letter-spacing: -0.02em; }
+  .quote span { color: var(--accent); font-style: normal; font-weight: 400; }
+  .philosophy-body { margin-top: 60px; max-width: 640px; }
+  .philosophy-body p { color: var(--text-muted); line-height: 1.7; font-size: 17px; font-family: var(--display); font-weight: 300; }
+  .download-section { text-align: center; padding: 180px 40px; }
+  .download-section .section-title { margin: 0 auto 24px; }
+  .download-section .section-lede { margin: 0 auto 48px; }
+  .download-section .cta-row { justify-content: center; }
+  footer { padding: 60px 40px 40px; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto; }
+  footer p { color: var(--text-dim); font-size: 13px; }
+  @media (max-width: 900px) {
+    .nav { padding: 16px 20px; }
+    .hero { padding: 140px 20px 80px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { justify-content: center; gap: 0; }
+    .hero-visual .phone-frame { width: 240px; height: 540px; }
+    .hero-visual .phone-mid,
+    .hero-visual .phone-right { display: none; }
+    .hero-visual .phone-frame:first-child { transform: none; }
+    .section { padding: 80px 20px; }
+    .demo-wrap { grid-template-columns: 1fr; padding: 32px 24px; gap: 40px; }
+    .features { grid-template-columns: 1fr; }
+    .philosophy { padding: 80px 20px; }
+    .download-section { padding: 100px 20px; }
+    .result-bars { height: 220px; gap: 12px; }
+    .result-bar-value { font-size: 28px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+  [data-lang-ru] { display: none; }
+  body.lang-ru [data-lang-en] { display: none; }
+  body.lang-ru [data-lang-ru] { display: initial; }
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<nav class="nav">
+  <div class="brand">
+    <div class="brand-mark">C</div>
+    <span>Climb</span>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span data-lang-en>TRACK &amp; GROW</span>
+        <span data-lang-ru>TRACK &amp; GROW</span>
+      </div>
+
+      <h1>
+        <span data-lang-en>A habit tracker for <em>comfortable growth.</em></span>
+        <span data-lang-ru>Трекер для <em>комфортного развития</em> привычек.</span>
+      </h1>
+
+      <p class="lede">
+        <span data-lang-en>Set how you want to grow — Climb helps you keep the pace.</span>
+        <span data-lang-ru>Задай, как ты хочешь расти — Climb поможет держать твой темп.</span>
+      </p>
+
+      <div class="cta-row">
+        <a href="https://expo.dev/artifacts/eas/jDokFGBRCdLPKYTN8ujvpC.apk" class="cta cta-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 17.59 15.59 7H9V5h10v10h-2V8.41L6.41 19 5 17.59z" fill="currentColor" stroke="none"/>
+          </svg>
+          <span data-lang-en>Download for Android</span>
+          <span data-lang-ru>Скачать для Android</span>
+        </a>
+        <a class="cta cta-disabled">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+          </svg>
+          <span data-lang-en>Download for iOS</span>
+          <span data-lang-ru>Скачать для iOS</span>
+          <span class="cta-badge" data-lang-en>SOON</span>
+          <span class="cta-badge" data-lang-ru>СКОРО</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- PHONE 1: Home screen — Wed Apr 15, 3/5 done, 12-day streak -->
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;">
+            <div>
+              <div style="font-size:8.5px;color:var(--text-muted);margin-bottom:1px;"><span>Wednesday, April 15</span></div>
+              <div style="font-size:21px;font-weight:700;line-height:1;letter-spacing:-0.03em;"><span>3 / 5 done</span></div>
+            </div>
+            <div style="background:rgba(255,169,77,0.13);border-radius:9px;padding:3px 7px;display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span style="font-size:13px;">&#x1F525;</span>
+              <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--fire);line-height:1;">12</div><div style="font-size:6.5px;color:var(--text-dim);line-height:1.3;"><span>in a row</span></div></div>
+            </div>
+          </div>
+
+          <div class="habit-card">
+            <div class="habit-row">
+              <div><div class="habit-name"><span>Squats</span></div><div class="habit-meta"><span class="goal">33</span><span> reps &middot; +1 daily</span></div></div>
+              <div class="check-btn check-done">&#x2713;</div>
+            </div>
+            <div class="history-row"><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-done cell-today"></div></div>
+          </div>
+
+          <div class="habit-card">
+            <div class="habit-row">
+              <div><div class="habit-name"><span>Reading</span></div><div class="habit-meta"><span class="goal">22</span><span> min &middot; +1 min daily</span></div></div>
+              <div class="check-btn check-partial">&#x2713;</div>
+            </div>
+            <div class="history-row"><div class="cell cell-done"></div><div class="cell cell-partial"></div><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-partial"></div><div class="cell cell-partial cell-today"></div></div>
+          </div>
+
+          <div class="habit-card">
+            <div class="habit-row">
+              <div><div class="habit-name"><span>English words</span></div><div class="habit-meta"><span class="goal">15</span><span> words &middot; +1 weekly</span></div></div>
+              <div class="check-btn check-done">&#x2713;</div>
+            </div>
+            <div class="history-row"><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-done"></div><div class="cell cell-done cell-today"></div></div>
+          </div>
+
+          <div class="habit-card">
+            <div class="habit-row">
+              <div><div class="habit-name"><span>Meditation</span></div><div class="habit-meta"><span class="goal">8</span><span> min &middot; +30 sec daily</span></div></div>
+              <div class="check-btn check-pending"></div>
+            </div>
+            <div class="history-row"><div class="cell cell-partial"></div><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-partial"></div><div class="cell cell-skip cell-today"></div></div>
+          </div>
+
+          <div class="habit-card" style="margin-bottom:3px;">
+            <div class="habit-row">
+              <div><div class="habit-name"><span>Cold shower</span></div><div class="habit-meta"><span class="goal">90</span><span> sec &middot; fixed</span></div></div>
+              <div class="check-btn check-pending"></div>
+            </div>
+            <div class="history-row"><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-skip"></div><div class="cell cell-done"></div><div class="cell cell-skip cell-today"></div></div>
+          </div>
+
+          <!-- weekday labels: must use same grid-template-columns as .history-row (6x14px gap 3px) -->
+          <div style="display:grid;grid-template-columns:repeat(6,14px);gap:3px;font-size:6.5px;color:var(--text-dim);text-align:center;margin-top:3px;">
+            <span>F</span><span>S</span><span>S</span><span>M</span><span>T</span><span style="color:var(--accent);font-weight:700;">W</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE 2: Squats detail / calendar — today Apr 15 -->
+      <div class="phone-frame phone-mid">
+        <div class="phone-screen">
+          <div style="display:flex;align-items:center;margin-bottom:7px;">
+            <span style="color:var(--accent);font-size:10px;margin-right:3px;">&#8592;</span>
+            <span style="font-size:8.5px;color:var(--text-muted);"><span>Back</span></span>
+            <span style="flex:1;text-align:center;font-size:10px;font-weight:700;padding-right:14px;"><span>Squats</span></span>
+          </div>
+          <div style="background:#1c1c22;border-radius:10px;padding:9px;text-align:center;margin-bottom:6px;">
+            <div style="font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2px;"><span>TODAY</span></div>
+            <div style="font-size:30px;font-weight:700;color:var(--accent);letter-spacing:-0.02em;line-height:1;">33 <span style="font-size:14px;font-weight:500;">reps</span></div>
+          </div>
+          <!-- April 2026 calendar: starts Wed -->
+          <div style="background:#1c1c22;border-radius:10px;padding:6px 7px 5px;">
+            <div style="font-size:9.5px;font-weight:700;text-align:center;margin-bottom:4px;"><span>April 2026</span></div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:2px;">
+              <span style="font-size:6.5px;color:var(--text-dim);">Mo</span><span style="font-size:6.5px;color:var(--text-dim);">Tu</span><span style="font-size:6.5px;color:var(--text-dim);">We</span><span style="font-size:6.5px;color:var(--text-dim);">Th</span><span style="font-size:6.5px;color:var(--text-dim);">Fr</span><span style="font-size:6.5px;color:var(--text-dim);">Sa</span><span style="font-size:6.5px;color:var(--text-dim);">Su</span>
+              
+            </div>
+            <style>.cd{font-size:7.5px;text-align:center;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:4px;} .cd-g{background:#4ade80;color:#000;font-weight:600;} .cd-s{background:#222228;color:#555;} .cd-t{background:#a78bfa;color:#fff;font-weight:700;box-shadow:0 0 0 1.5px rgba(167,139,250,0.5);} .cd-f{color:#2a2a36;}</style>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:1px;"><div class="cd"></div><div class="cd"></div><div class="cd cd-f">1</div><div class="cd cd-f">2</div><div class="cd cd-f">3</div><div class="cd cd-f">4</div><div class="cd cd-f">5</div></div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:1px;"><div class="cd cd-f">6</div><div class="cd cd-f">7</div><div class="cd cd-f">8</div><div class="cd cd-s">9</div><div class="cd cd-g">10</div><div class="cd cd-g">11</div><div class="cd cd-s">12</div></div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:1px;"><div class="cd cd-g">13</div><div class="cd cd-g">14</div><div class="cd cd-t">15</div><div class="cd cd-f">16</div><div class="cd cd-f">17</div><div class="cd cd-f">18</div><div class="cd cd-f">19</div></div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:1px;"><div class="cd cd-f">20</div><div class="cd cd-f">21</div><div class="cd cd-f">22</div><div class="cd cd-f">23</div><div class="cd cd-f">24</div><div class="cd cd-f">25</div><div class="cd cd-f">26</div></div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);"><div class="cd cd-f">27</div><div class="cd cd-f">28</div><div class="cd cd-f">29</div><div class="cd cd-f">30</div><div class="cd"></div><div class="cd"></div><div class="cd"></div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px;">
+            <div style="background:#1c1c22;border-radius:8px;padding:6px;text-align:center;">
+              <div style="font-size:19px;font-weight:700;line-height:1;letter-spacing:-0.02em;">6/15</div>
+              <div style="font-size:7px;color:var(--text-dim);margin-top:2px;"><span>Days done</span></div>
+            </div>
+            <div style="background:#1c1c22;border-radius:8px;padding:6px;text-align:center;">
+              <div style="font-size:19px;font-weight:700;color:#4ade80;line-height:1;letter-spacing:-0.02em;">195</div>
+              <div style="font-size:7px;color:var(--text-dim);margin-top:2px;"><span>Total reps</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE 3: New Habit form -->
+      <div class="phone-frame phone-right">
+        <div class="phone-screen">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span style="font-size:8.5px;color:var(--text-muted);"><span>Cancel</span></span>
+            <span style="font-size:10.5px;font-weight:700;"><span>New Habit</span></span>
+            <span style="font-size:8.5px;font-weight:700;color:#a78bfa;"><span>Save</span></span>
+          </div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px;"><span>NAME</span></div>
+          <div style="background:#1c1c22;border-radius:7px;padding:6px 8px;margin-bottom:8px;font-size:8.5px;color:var(--text-dim);"><span>e.g. Morning run</span></div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px;"><span>STARTING GOAL</span></div>
+          <div style="background:#1c1c22;border-radius:7px;padding:6px 8px;margin-bottom:8px;font-size:8.5px;color:var(--text-dim);">e.g. 10</div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;"><span>UNIT</span></div>
+          <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px;">
+            <span style="padding:3px 7px;border-radius:20px;border:1.5px solid #a78bfa;color:#a78bfa;font-size:8.5px;">times</span><span style="padding:3px 7px;border-radius:20px;background:#1c1c22;font-size:8.5px;">min</span><span style="padding:3px 7px;border-radius:20px;background:#1c1c22;font-size:8.5px;">units</span><span style="padding:3px 7px;border-radius:20px;background:#1c1c22;font-size:8.5px;">custom</span>
+            
+          </div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;"><span>PROGRESSION</span></div>
+          <div style="display:flex;flex-direction:column;gap:2.5px;">
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;border:1.5px solid #a78bfa;font-size:8.5px;"><span>&#x1F512; Fixed</span></div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);"><span>&#xFF0B; +N per day</span></div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);"><span>&#x1F4C5; +N per week</span></div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);"><span>&#x1F4C8; +N% per day</span></div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5.5px 8px;font-size:8.5px;color:var(--text-muted);"><span>&#x1F4C8; +N% per week</span></div>
+          </div>
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin:7px 0 4px;"><span>REMINDER</span></div>
+          <div style="display:flex;gap:5px;align-items:center;">
+            <div style="border-radius:7px;padding:5px 11px;border:1.5px solid #a78bfa;font-size:8.5px;font-weight:700;color:#a78bfa;"><span>On</span></div>
+            <div style="background:#1c1c22;border-radius:7px;padding:5px 8px;font-size:8.5px;color:var(--text-muted);flex:1;">08:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section fade-in">
+  <div class="section-label">
+    <span data-lang-en>PRINCIPLES</span>
+    <span data-lang-ru>ПРИНЦИПЫ</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang-en>Three principles <em>of Climb.</em></span>
+    <span data-lang-ru>Три принципа <em>Climb.</em></span>
+  </h2>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-num">01</div>
+      <h4>
+        <span data-lang-en>Today's target, calculated for you</span>
+        <span data-lang-ru>Цель на сегодня посчитана за тебя</span>
+      </h4>
+      <p>
+        <span data-lang-en>You do the work — Climb does the math. Set your rule — +1 a day, +10% a week, or anything else — and Climb tells you how much to do today for your goal.</span>
+        <span data-lang-ru>Ты делаешь — Climb считает. Задай своё правило — +1 в день, +10% в неделю или любое другое — и Climb подскажет, сколько сделать сегодня для твоей цели.</span>
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-num">02</div>
+      <h4>
+        <span data-lang-en>Smart adjustment</span>
+        <span data-lang-ru>Умная подстройка</span>
+      </h4>
+      <p>
+        <span data-lang-en>Climb looks at what you actually did. Hit the target — the bar rises by your rule. Did less — the bar holds at its current level so the habit settles in.</span>
+        <span data-lang-ru>Climb смотрит на твои реальные результаты. Выполнил план — планка подрастёт по твоему правилу. Сделал частично — планка сохранится на текущем уровне, чтобы привычка закрепилась.</span>
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-num">03</div>
+      <h4>
+        <span data-lang-en>Visible progress</span>
+        <span data-lang-ru>Видимый прогресс</span>
+      </h4>
+      <p>
+        <span data-lang-en>You see your results, your streaks, your dynamics — how far you've come.</span>
+        <span data-lang-ru>Ты видишь свои результаты, динамику и прогресс — как далеко ты ушёл.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy fade-in">
+  <div class="philosophy-inner">
+    <div class="section-label">
+      <span data-lang-en>THE IDEA</span>
+      <span data-lang-ru>ИДЕЯ</span>
+    </div>
+
+    <blockquote class="quote">
+      <span data-lang-en>1% better every day. After a year, you're 37 times stronger than when you started.</span>
+      <span data-lang-ru>Если каждый день делать на 1% больше, чем вчера — за год станешь в 37 раз лучше, чем в начале.</span>
+    </blockquote>
+  </div>
+</section>
+
+<section class="download-section fade-in">
+  <div class="section-label">
+    <span data-lang-en>READY?</span>
+    <span data-lang-ru>ГОТОВ?</span>
+  </div>
+  <h2 class="section-title">
+    <span data-lang-en>Easy to start. <em>Easy to keep going.</em></span>
+    <span data-lang-ru>Легко начать. <em>Легко продолжать.</em></span>
+  </h2>
+  <p class="section-lede">
+    <span data-lang-en>Free. No sign-up, no paywall.</span>
+    <span data-lang-ru>Бесплатно. Без регистрации и подписок.</span>
+  </p>
+
+  <div class="cta-row">
+    <a href="https://expo.dev/artifacts/eas/jDokFGBRCdLPKYTN8ujvpC.apk" class="cta cta-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 17.59 15.59 7H9V5h10v10h-2V8.41L6.41 19 5 17.59z" fill="currentColor" stroke="none"/>
+      </svg>
+      <span data-lang-en>Download for Android</span>
+      <span data-lang-ru>Скачать для Android</span>
+    </a>
+    <a class="cta cta-disabled">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+      </svg>
+      <span data-lang-en>iOS — coming soon</span>
+      <span data-lang-ru>iOS — скоро</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="brand">
+    <div class="brand-mark">C</div>
+    <span>Climb</span>
+  </div>
+  <p>© 2026 Climb</p>
+</footer>
+
+<script>
+  const body = document.body;
+  const langBtns = document.querySelectorAll('.lang-btn');
+  langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      langBtns.forEach(b => b.classList.toggle('active', b === btn));
+      body.classList.toggle('lang-ru', lang === 'ru');
+    });
+  });
+
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+</script>
+
+</body>
+</html>
