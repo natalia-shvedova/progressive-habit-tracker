@@ -24,10 +24,14 @@
   .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 15, 20, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 0.5px solid var(--border); }
   .brand { font-family: var(--display); font-size: 20px; font-weight: 500; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
   .brand-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 14px; font-family: var(--body); }
-  .lang-switch { display: flex; gap: 2px; padding: 3px; background: var(--bg-elev); border-radius: 100px; border: 0.5px solid var(--border); }
-  .lang-btn { padding: 6px 14px; background: transparent; border: none; color: var(--text-muted); font-family: var(--body); font-size: 12px; font-weight: 500; border-radius: 100px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; }
-  .lang-btn.active { background: var(--accent); color: #fff; }
-  .lang-btn:hover:not(.active) { color: var(--text); }
+  .lang-dropdown { position: relative; }
+  .lang-current { padding: 6px 14px; background: var(--bg-elev); border: 0.5px solid var(--border); border-radius: 100px; color: var(--text-muted); font-family: var(--body); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; }
+  .lang-current:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .lang-menu { position: absolute; top: calc(100% + 6px); right: 0; background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 10px; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-4px); transition: all 0.2s; min-width: 120px; z-index: 200; }
+  .lang-menu.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .lang-option { display: block; width: 100%; padding: 10px 16px; background: transparent; border: none; color: var(--text-muted); font-family: var(--body); font-size: 13px; font-weight: 400; cursor: pointer; text-align: left; transition: all 0.15s; }
+  .lang-option:hover { background: var(--bg-elev); color: var(--text); }
+  .lang-option.active { color: var(--accent); font-weight: 500; }
   .hero { min-height: 100vh; padding: 180px 40px 120px; position: relative; display: flex; flex-direction: column; justify-content: center; max-width: 1600px; margin: 0 auto; }
   .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; }
   .hero-text { max-width: 560px; }
@@ -186,9 +190,12 @@
     <div class="brand-mark">C</div>
     <span>Climb</span>
   </div>
-  <div class="lang-switch">
-    <button class="lang-btn active" data-lang="en">EN</button>
-    <button class="lang-btn" data-lang="ru">RU</button>
+  <div class="lang-dropdown">
+    <button class="lang-current" id="langToggle">EN ▾</button>
+    <div class="lang-menu" id="langMenu">
+      <button class="lang-option active" data-lang="en">English</button>
+      <button class="lang-option" data-lang="ru">Русский</button>
+    </div>
   </div>
 </nav>
 
@@ -394,12 +401,12 @@
     <div class="feature">
       <div class="feature-num">02</div>
       <h4>
-        <span data-lang-en>Smart adjustment</span>
-        <span data-lang-ru>Умная подстройка</span>
+        <span data-lang-en>Adjusts to you</span>
+        <span data-lang-ru>Подстройка под тебя</span>
       </h4>
       <p>
-        <span data-lang-en>Climb looks at what you actually did. Hit the target — the bar rises by your rule. Did less — the bar holds at its current level so the habit settles in.</span>
-        <span data-lang-ru>Climb смотрит на твои реальные результаты. Выполнил план — планка подрастёт по твоему правилу. Сделал частично — планка сохранится на текущем уровне, чтобы привычка закрепилась.</span>
+        <span data-lang-en>The target grows from your last completion — not from the calendar. Hit it — the bar rises by your rule. Did less — it holds so the habit settles in.</span>
+        <span data-lang-ru>Цель растёт от последнего выполнения — не от календаря. Выполнил — уровень подрастёт. Сделал частично — уровень останется, чтобы привычка закрепилась.</span>
       </p>
     </div>
 
@@ -441,8 +448,8 @@
     <span data-lang-ru>Легко начать. <em>Легко продолжать.</em></span>
   </h2>
   <p class="section-lede">
-    <span data-lang-en>Free. Android-first. iOS coming soon.</span>
-    <span data-lang-ru>Бесплатно. Сначала Android — iOS скоро.</span>
+    <span data-lang-en>Free. No sign-up, no paywall.</span>
+    <span data-lang-ru>Бесплатно. Без регистрации и подписок.</span>
   </p>
 
   <div class="cta-row">
@@ -473,12 +480,23 @@
 
 <script>
   const body = document.body;
-  const langBtns = document.querySelectorAll('.lang-btn');
-  langBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.dataset.lang;
-      langBtns.forEach(b => b.classList.toggle('active', b === btn));
+  const langToggle = document.getElementById('langToggle');
+  const langMenu = document.getElementById('langMenu');
+  const langOptions = document.querySelectorAll('.lang-option');
+
+  langToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', () => langMenu.classList.remove('open'));
+
+  langOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      const lang = opt.dataset.lang;
       body.classList.toggle('lang-ru', lang === 'ru');
+      langToggle.textContent = (lang === 'ru' ? 'RU' : 'EN') + ' ▾';
+      langOptions.forEach(o => o.classList.toggle('active', o === opt));
+      langMenu.classList.remove('open');
     });
   });
 
