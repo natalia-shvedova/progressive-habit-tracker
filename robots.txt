@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://natalia-shvedova.github.io/progressive-habit-tracker/sitemap.xml
